@@ -11,7 +11,7 @@ build_rp2() {
     make ${MAKEOPTS} -C ports/rp2 submodules
     make ${MAKEOPTS} -C ports/rp2
     make ${MAKEOPTS} -C ports/rp2 BOARD=$1 submodules
-    make ${MAKEOPTS} -C micropython/ports/rp2 BOARD=$1 USER_C_MODULES=../../../ulab/code/micropython.cmake CFLAGS_EXTRA=-DULAB_HASH=$ulab_hash
+    make ${MAKEOPTS} -C micropython/ports/rp2 BOARD=$1 USER_C_MODULES=../../../st7789_mpy/micropython.cmake
     copy_files rp2/build-$1/firmware.uf2 $1
     clean_up rp2 build-$1
 }
@@ -22,7 +22,7 @@ build_rp2_uart_vfat() {
     make ${MAKEOPTS} -C ports/rp2 submodules
     make ${MAKEOPTS} -C ports/rp2
     make ${MAKEOPTS} -C ports/rp2 BOARD=$1 submodules
-    make ${MAKEOPTS} -C micropython/ports/rp2 BOARD=$1 USER_C_MODULES=../../../ulab/code/micropython.cmake CFLAGS_EXTRA=-DULAB_HASH=$ulab_hash 
+    make ${MAKEOPTS} -C micropython/ports/rp2 BOARD=$1 USER_C_MODULES=../../../st7789_mpy/micropython.cmake
     copy_files rp2/build-$1/firmware.uf2 "$1"-UART-VFAT
     clean_up rp2 build-$1
 }

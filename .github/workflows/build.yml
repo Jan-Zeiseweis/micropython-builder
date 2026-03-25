@@ -28,7 +28,7 @@ jobs:
       - name: Install ESP-IDF toolchain
         run: ./scripts/install_espidf.sh
 
-      - name: Checkout ulab/micropython
+      - name: Checkout st7789_mpy/micropython
         run: ./scripts/init.sh
 
       - name: Create artifacts directory
