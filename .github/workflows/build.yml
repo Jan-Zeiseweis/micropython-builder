@@ -25,40 +25,16 @@ jobs:
       - name: Install arm toolchain
         run: ./scripts/install_arm.sh
 
-      - name: Install ESP-IDF toolchain
-        run: ./scripts/install_espidf.sh
-
       - name: Checkout st7789_mpy/micropython
         run: ./scripts/init.sh
 
       - name: Create artifacts directory
         run: mkdir ./artifacts
 
-      # this section is only for test purposes
-      # - name: Compile unix port
-      #   if: always()
-      # #   run: ./scripts/unix.sh
-
-
-      - name: Compile for raspberry pico
-        if: always()
-        run: ./scripts/rp2/pico.sh
-
-      - name: Compile for raspberry pico with UART and VFAT support
-        if: always()
-        run: ./scripts/rp2/pico_uart_vfat.sh
-
       - name: Compile for raspberry pico W
         if: always()
         run: ./scripts/rp2/pico_w.sh
 
-      - name: Compile for raspberry pico 2
-        if: always()
-        run: ./scripts/rp2/pico2.sh
-
-      - name: Compile for raspberry pico 2W
-        if: always()
-        run: ./scripts/rp2/pico2_w.sh
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
