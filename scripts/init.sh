@@ -23,8 +23,8 @@ git clone https://github.com/Jan-Zeiseweis/st7789_mpy st7789_mpy || git -C st778
 # only check out micropython, if it is not available locally, otherwise, pull
 git clone https://github.com/micropython/micropython micropython || git -C micropython pull
 : ${MICROPYTHON_TAG:=$(git tag --sort -v:refname | grep -v preview | head -n 1)}
-# git -C micropython checkout ${MICROPYTHON_TAG}
-git -C micropython checkout v1.24.0
+git -C micropython checkout ${MICROPYTHON_TAG}
+# git -C micropython checkout v1.24.0
 
 cd micropython
 git submodule update --init
