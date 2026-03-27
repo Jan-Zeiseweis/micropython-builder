@@ -24,6 +24,9 @@ jobs:
 
       - name: Install arm toolchain
         run: ./scripts/install_arm.sh
+        
+      - name: Install ESP-IDF toolchain
+        run: ./scripts/install_espidf.sh
 
       - name: Checkout st7789_mpy/micropython
         run: ./scripts/init.sh
@@ -31,6 +34,10 @@ jobs:
       - name: Create artifacts directory
         run: mkdir ./artifacts
 
+      - name: Compile for raspberry pico
+        if: always()
+        run: ./scripts/rp2/pico.sh
+        
       - name: Compile for raspberry pico W
         if: always()
         run: ./scripts/rp2/pico_w.sh
