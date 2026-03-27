@@ -20,8 +20,8 @@ else
 fi
 
 
-# only check out ulab, if is not availble locally, otherwise, pull
-git clone https://github.com/v923z/micropython-ulab ulab || git -C ulab pull
+# only check out st7789_mpy, if it is not available locally, otherwise, pull
+git clone https://github.com/Jan-Zeiseweis/st7789_mpy st7789_mpy || git -C st7789_mpy pull
 
 
 # only check out micropython, if it is not available locally, otherwise, pull
@@ -41,7 +41,7 @@ git clone https://github.com/micropython/micropython-lib || git -C micropython-l
 
 
 # create hashes, which will be appended to the output file names
-ulab_hash=`cd ulab; git describe --abbrev=8 --always; cd ..`
+st7789_hash=`cd st7789_mpy; git describe --abbrev=8 --always; cd ..`
 upython_hash=`cd micropython; git describe --abbrev=8 --always; cd ..`
 
 # the cross-compiler is required for each build, so we might as well get it over with
@@ -50,7 +50,7 @@ make ${MAKEOPTS} -C micropython/mpy-cross
 # choose a delimiter that is not probable to turn up in the description of the file
 write_platforms_list() {
     if [ -f "platforms.md" ]; then
-        echo $1"| "$1-$upython_hash-$ulab_hash$ext"| " $2 >> ./platforms.list
+        echo $1"| "$1-$upython_hash-$st7789_hash$ext"| " $2 >> ./platforms.list
     echo
     fi
 }

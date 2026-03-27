@@ -1,6 +1,6 @@
 # micropython-builder
 
-Bleeding edge `micropython` firmware with `ulab` included.
+Bleeding edge `micropython` firmware with `st7789` included.
 ## Contents
 
 1. [Overview](#overview)
@@ -11,13 +11,13 @@ Bleeding edge `micropython` firmware with `ulab` included.
 
 ## Overview
 
-This project aims to bring [ulab](https://github.com/v923z/micropython-ulab/)
+This project aims to bring [st7789_mpy](https://github.com/Jan-Zeiseweis/st7789_mpy/)
 to those microcontrollers that are supported by `micropython`. Every second day, the github CI automatically
-clones the latest `micropython`, and `ulab` repositories, compiles the firmware, and uploads the binary files to
-[Releases](https://github.com/v923z/micropython-builder/releases).
+clones the latest `micropython`, and `st7789_mpy` repositories, compiles the firmware, and uploads the binary files to
+[Releases](https://github.com/Jan-Zeiseweis/micropython-builder/releases).
 
-The github [workflow file](https://github.com/v923z/micropython-builder/blob/main/.github/workflows/build.yml)
-simply calls the platform-specific [build scripts](https://github.com/v923z/micropython-builder/tree/main/scripts)
+The github [workflow file](https://github.com/Jan-Zeiseweis/micropython-builder/blob/master/.github/workflows/build.yml)
+simply calls the platform-specific [build scripts](https://github.com/Jan-Zeiseweis/micropython-builder/tree/master/scripts)
 one after the other, and contains no other steps. This approach results in build steps that can easily be
 reproduced on any linux computer. We hope that by offering the community build scripts that are proven
 to run on a freshly installed system, we can significantly lower the threshold to firmware customisation.
@@ -26,23 +26,13 @@ to run on a freshly installed system, we can significantly lower the threshold t
 
 ## Platforms and firmware
 
-Unless otherwise specified, firmware is built with default settings (i.e., those given in the `mpconfigboad.h` file),
-and with support for 2-dimensional complex arrays. On platforms, where flash size is a concern, the dimensionality
-might be reduced, complex support might be switched off, and certain functions might be excluded from the firmware.
+Unless otherwise specified, firmware is built with default settings (i.e., those given in the `mpconfigboad.h` file).
+On platforms, where flash size is a concern, certain functions might be excluded from the firmware.
 Compilation details, pre-processor switches etc., can always be read out of the corresponding build script. Again,
 the build scripts are the only place holding information on the binary output.
 
 Each firmware file is named after the board on which it is supposed to run, and, in addition, the binary contains
-the short git hash of `micropython` (in `micropython`'s welcome prompt), and the short git hash of `ulab`
-(in the `ulab.__sha__` variable). Hence, it is always possible to determine,
-which [micropython](https://github.com/micropython/micropython/commits/master), and
-[ulab](https://github.com/v923z/micropython-ulab/commits/master) commits, respectively, are included by looking at the 
-`micropython` welcome prompt, and then 
-
-```python
-import ulab
-ulab.__sha__
-```
+the short git hash of `micropython` (in `micropython`'s welcome prompt), and the short git hash of `st7789_mpy`.
 
 [Contents](#contents)
 
@@ -52,7 +42,7 @@ If you would like to compile (or customise) the firmware on a local machine, all
 with
 
 ```bash
-git clone https://github.com/v923z/micropython-builder.git
+git clone https://github.com/Jan-Zeiseweis/micropython-builder.git
 ```
 
 then
@@ -74,13 +64,13 @@ The rest is taken care of.
 ## Contributing and issues
 
 If your board is not listed, but you would like to see it here, you can submit a build script by means of a
-[pull request](https://github.com/v923z/micropython-builder/pulls). Alternatively, you can open an
-[issue](https://github.com/v923z/micropython-builder/issues) with the specifications of your board. Note that,
+[pull request](https://github.com/Jan-Zeiseweis/micropython-builder/pulls). Alternatively, you can open an
+[issue](https://github.com/Jan-Zeiseweis/micropython-builder/issues) with the specifications of your board. Note that,
 by definition, only those boards can be included in the CI that are supported by `micropython`.
 
-Issues concerning `micropython`, or `ulab` themselves should be opened in their respective repositories, i.e.,
+Issues concerning `micropython`, or `st7789_mpy` themselves should be opened in their respective repositories, i.e.,
 [micropython issues](https://github.com/micropython/micropython/issues), and
-[ulab issues](https://github.com/v923z/micropython-ulab/issues).
+[st7789_mpy issues](https://github.com/Jan-Zeiseweis/st7789_mpy/issues).
 
 ### Testing the build process on github
 
