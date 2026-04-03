@@ -7,11 +7,14 @@
 
 source ./scripts/init.sh
 
+cp st7789_mpy/fonts/bitmap/vga* micropython/ports/rp2/modules
+
 build_rp2() {
     make ${MAKEOPTS} -C micropython/ports/rp2 submodules
     make ${MAKEOPTS} -C micropython/ports/rp2
     make ${MAKEOPTS} -C micropython/ports/rp2 BOARD=$1 submodules
-    make ${MAKEOPTS} -C micropython/ports/rp2 BOARD=$1 USER_C_MODULES=../../../st7789_mpy/micropython.cmake
+    make ${MAKEOPTS} -C micropython/ports/rp2 BOARD=$1 USER_C_MODULES=../../../st7789_mpy/micropython.cmake FROZEN_MANIFEST="" FROZEN_MPY_DIR=modules
+
     copy_files rp2/build-$1/firmware.uf2 $1
     clean_up rp2 build-$1
 }
