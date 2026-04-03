@@ -22,12 +22,21 @@ git clone https://github.com/Jan-Zeiseweis/st7789_mpy st7789_mpy || git -C st778
 
 # only check out micropython, if it is not available locally, otherwise, pull
 git clone https://github.com/micropython/micropython micropython || git -C micropython pull
-: ${MICROPYTHON_TAG:=$(git tag --sort -v:refname | grep -v preview | head -n 1)}
-# git -C micropython checkout ${MICROPYTHON_TAG}
-git -C micropython checkout v1.27.0
+# MICROPYTHON_VERSION can be overridden by the caller (e.g. rp2_init.sh sets v1.26.0 for Pico 2)
+: ${MICROPYTHON_VERSION:=v1.27.0}
+git -C micropython checkout ${MICROPYTHON_VERSION}
 
 cd micropython
-git submodule update --init
+# RP2_SUBMODULES_ONLY=1 selects a targeted init for RP2350 (Pico 2) builds; default is full init
+if [ -n "${RP2_SUBMODULES_ONLY}" ]; then
+    git submodule update --init lib/tinyusb
+    git submodule update --init lib/pico-sdk
+    cd lib/pico-sdk
+    git submodule update --init lib/tinyusb
+    cd ../..
+else
+    git submodule update --init
+fi
 cd ..
 
 
