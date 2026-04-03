@@ -39,6 +39,14 @@ git clone https://github.com/micropython/micropython-lib || git -C micropython-l
 st7789_hash=`cd st7789_mpy; git describe --abbrev=8 --always; cd ..`
 upython_hash=`cd micropython; git describe --abbrev=8 --always; cd ..`
 
+# generate a manifest that freezes the bitmap fonts and tft_config.py into the firmware
+REPO_ROOT=$(pwd)
+cat > manifest.py << MANIFEST_EOF
+freeze("${REPO_ROOT}/st7789_mpy/fonts/bitmap/")
+freeze("${REPO_ROOT}/scripts/", "tft_config.py")
+MANIFEST_EOF
+export FROZEN_MANIFEST="${REPO_ROOT}/manifest.py"
+
 # the cross-compiler is required for each build, so we might as well get it over with
 make ${MAKEOPTS} -C micropython/mpy-cross
 
