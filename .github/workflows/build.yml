@@ -8,40 +8,70 @@ on:
   pull_request:
     paths:
     - '.github/workflows/*.yml'
-    - './scripts/*.sh'
+    - 'scripts/**/*.sh'
 
 jobs:
   build:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - board: RPI_PICO
+            script: scripts/rp2/pico.sh
+          - board: RPI_PICO_W
+            script: scripts/rp2/pico_w.sh
     steps:
 
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
       - name: Checkout builder
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
 
-      - name: Install arm toolchain
+      - name: Install ARM toolchain
         run: ./scripts/install_arm.sh
-        
-      - name: Install ESP-IDF toolchain
-        run: ./scripts/install_espidf.sh
 
-      - name: Checkout st7789_mpy/micropython
-        run: ./scripts/init.sh
+      - name: Cache sources and mpy-cross
+        uses: actions/cache@v4
+        with:
+          path: |
+            micropython
+            st7789_mpy
+            micropython-lib
+          key: sources-${{ hashFiles('scripts/init.sh') }}
 
       - name: Create artifacts directory
         run: mkdir ./artifacts
 
-      - name: Compile for raspberry pico
-        if: always()
-        run: ./scripts/rp2/pico.sh
-        
-      - name: Compile for raspberry pico W
-        if: always()
-        run: ./scripts/rp2/pico_w.sh
+      - name: Compile ${{ matrix.board }}
+        run: ./${{ matrix.script }}
 
+      - name: Upload firmware artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ matrix.board }}
+          path: ./artifacts/
+
+  release:
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: Checkout builder
+        uses: actions/checkout@v4
+
+      - name: Download all firmware artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: firmware-*
+          merge-multiple: true
+          path: ./artifacts/
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
