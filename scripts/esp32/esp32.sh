@@ -10,7 +10,7 @@ source ./scripts/init.sh
 
 build_esp32() {
     source esp-idf/export.sh
-    make ${MAKEOPTS} -C micropython/ports/esp32 BOARD=$1 USER_C_MODULES=../../../../ulab/code/micropython.cmake CFLAGS_EXTRA=-DULAB_HASH=$ulab_hash
+    make ${MAKEOPTS} -C micropython/ports/esp32 BOARD=$1 USER_C_MODULES=../../../../ulab/code/micropython.cmake CFLAGS_EXTRA=-DULAB_HASH=$ulab_hash FROZEN_MANIFEST=${FROZEN_MANIFEST}
     copy_files esp32/build-$1/firmware.bin $1
     clean_up esp32 build-$1
 }
