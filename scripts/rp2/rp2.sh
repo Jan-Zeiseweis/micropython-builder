@@ -11,7 +11,7 @@ build_rp2() {
     make ${MAKEOPTS} -C micropython/ports/rp2 submodules
     make ${MAKEOPTS} -C micropython/ports/rp2
     make ${MAKEOPTS} -C micropython/ports/rp2 BOARD=$1 submodules
-    make ${MAKEOPTS} -C micropython/ports/rp2 BOARD=$1 USER_C_MODULES=../../../st7789_mpy/micropython.cmake FROZEN_MANIFEST=${FROZEN_MANIFEST}
+    make ${MAKEOPTS} -C micropython/ports/rp2 BOARD=$1 USER_C_MODULES=../../../st7789_mpy/micropython.cmake
     copy_files rp2/build-$1/firmware.uf2 $1
     clean_up rp2 build-$1
 }
