@@ -23,7 +23,7 @@ git clone https://github.com/Jan-Zeiseweis/st7789_mpy st7789_mpy || git -C st778
 # only check out micropython, if it is not available locally, otherwise, pull
 git clone https://github.com/micropython/micropython micropython || git -C micropython pull
 # MICROPYTHON_VERSION can be overridden by the caller (e.g. rp2_init.sh sets v1.26.0 for Pico 2)
-: ${MICROPYTHON_VERSION:=v1.27.0}
+: ${MICROPYTHON_VERSION:=v1.28.0}
 git -C micropython checkout ${MICROPYTHON_VERSION}
 
 cd micropython
