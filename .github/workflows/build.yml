@@ -40,6 +40,12 @@ jobs:
             micropython-lib
           key: sources-${{ hashFiles('scripts/init.sh') }}
 
+      - name: Cache picotool
+        uses: actions/cache@v4
+        with:
+          path: ~/.picotool
+          key: picotool-${{ hashFiles('scripts/init.sh') }}
+
       - name: Create artifacts directory
         run: mkdir ./artifacts
 
