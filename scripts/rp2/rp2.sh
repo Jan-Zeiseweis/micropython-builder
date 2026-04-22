@@ -8,7 +8,7 @@
 source ./scripts/init.sh
 
 cp st7789_mpy/fonts/bitmap/vga* micropython/ports/rp2/modules
-./micropython/mpy-cross/mpy-cross ./scripts/rp2/tft_config.py -o ./micropython/ports/rp2/modules/tft_config.mpy
+./micropython/mpy-cross/build/mpy-cross ./scripts/rp2/tft_config.py -o ./micropython/ports/rp2/modules/tft_config.mpy
 
 PICOTOOL_FETCH_DIR="${HOME}/.picotool"
 mkdir -p "${PICOTOOL_FETCH_DIR}"
